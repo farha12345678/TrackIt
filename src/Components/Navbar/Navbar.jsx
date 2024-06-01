@@ -7,7 +7,7 @@ const Navbar = () => {
     const links = <>
     <NavLink className={({ isActive }) => isActive ? 'border-x-2 border-red-400 text-red-600 text-xl ' : 'text-xl border-x-2 '} to='/'><li>Home</li></NavLink>
     <NavLink className={({ isActive }) => isActive ? 'border-x-2 border-red-400 text-red-600 text-xl ' : 'text-xl border-x-2 '} to='/dashboard'><li>Dashboard</li></NavLink>
-    <NavLink className='text-xl'  to='/'><li><p><FaBell /></p></li></NavLink>
+    <NavLink className='text-xl'  to='/dashboard/myParcel'><li><p><FaBell /></p></li></NavLink>
    
     </>
     return (
@@ -33,8 +33,8 @@ const Navbar = () => {
                             {links}
                         </ul>
                     </div>
-                    <div className="navbar-end">
-                    <NavLink className="text-xl" to='/login'>Log In</NavLink>
+                    <div className="navbar-end ">
+                    <NavLink className="text-xl mr-5" to='/login'>Log In</NavLink>
                     <NavLink className="text-xl" to='/register'>Register</NavLink>
     
                     </div>

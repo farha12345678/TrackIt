@@ -4,6 +4,8 @@ import Home from "../Components/Home/Home";
 import Root from "../Layout/Root";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
+import Dashboard from "../Layout/Dashboard";
+import MyParcel from "../Components/Dashboard/Parcel/MyParcel";
 
 const router = createBrowserRouter([
     {
@@ -21,6 +23,16 @@ const router = createBrowserRouter([
             {
                 path:'/register',
                 element:<Register></Register>
+            }
+        ]
+    },
+    {
+        path:'dashboard',
+        element:<Dashboard></Dashboard>,
+        children:[
+            {
+                path:'myParcel',
+                element:<MyParcel></MyParcel>
             }
         ]
     }

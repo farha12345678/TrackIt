@@ -1,0 +1,20 @@
+[
+    {
+      "id": "1",
+      "icon": "https://i.ibb.co/27DZ8Xr/safety.png",
+      "title": "Parcel Safety",
+      "description": "Your package is our top priority. With real-time tracking and secure handling, rest assured your parcel is in safe hands."
+    },
+    {
+      "id": "2",
+      "icon": "https://i.ibb.co/z42xKwG/fast-delivery.png",
+      "title": "Super Fast Delivery",
+      "description": "Get your parcels delivered at lightning speed! We ensure same-day delivery for most orders, making us the fastest in the business."
+    },
+    {
+      "id": "3",
+      "icon": "https://i.ibb.co/6DXdW2t/24-hour-service.png",
+      "title": "24/7 Customer Support",
+      "description": "Our dedicated customer support team is available round the clock to assist you with any queries or issues you may have."
+    }
+  ]
