@@ -1,0 +1,51 @@
+[
+    {
+      "name": "Fahad",
+      "phoneNumber": "123-456-7890",
+      "parcelsDelivered": 120,
+      "averageReview": 4.5
+    },
+    {
+      "name": "Rabbi",
+      "phoneNumber": "234-567-8901",
+      "parcelsDelivered": 98,
+      "averageReview": 4.7
+    },
+    {
+      "name": "Hasan",
+      "phoneNumber": "345-678-9012",
+      "parcelsDelivered": 150,
+      "averageReview": 4.6
+    },
+    {
+      "name": "Mahadi",
+      "phoneNumber": "456-789-0123",
+      "parcelsDelivered": 85,
+      "averageReview": 4.3
+    },
+    {
+      "name": "Tanvir",
+      "phoneNumber": "567-890-1234",
+      "parcelsDelivered": 110,
+      "averageReview": 4.8
+    },
+    {
+      "name": "Ahad",
+      "phoneNumber": "678-901-2345",
+      "parcelsDelivered": 95,
+      "averageReview": 4.4
+    },
+    {
+      "name": "Tamim",
+      "phoneNumber": "789-012-3456",
+      "parcelsDelivered": 130,
+      "averageReview": 4.9
+    },
+    {
+      "name": "Fardin",
+      "phoneNumber": "890-123-4567",
+      "parcelsDelivered": 75,
+      "averageReview": 4.2
+    }
+  ]
+  

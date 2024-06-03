@@ -1,22 +1,51 @@
 
 
 import { useContext, useState } from "react";
-import { Link } from "react-router-dom";
+import { Link} from "react-router-dom";
 
 import { FaEyeSlash, FaRegEye } from "react-icons/fa";
 import Swal from "sweetalert2";
 import { AuthContext } from "../Providers/AuthProvider";
 import user from "../assets/user.png"
+import UseAxiosPublic from "../Hooks/UseAxiosPublic";
+import SocialLogin from "./SocialLogin";
+
 
 
 
 
 const Register = () => {
+    // const navigate = useNavigate()
+    // const location = useLocation()
+    // const from = location?.state || '/'
+
+    const axiosPublic = UseAxiosPublic()
 
 
     const [showPassword, setShowPassword] = useState(false)
 
     const { createUser } = useContext(AuthContext)
+
+    // const handleSocial = socialProvider => {
+    //     socialProvider()
+    //     .then(result => {
+    //         const userInfo = {
+    //             userName : result.user?.displayName,
+    //             userEmail:result.user?.email,
+    //             userPhoto:result.user?.photoURL
+
+    //         }
+    //        axiosPublic.post('/users', userInfo)
+    //         .then(res=> {
+    //             if(res.data.insertedId){
+    //                 console.log(res.data);
+    //                 navigate(from)
+
+    //             }
+    //         })
+
+    //     })
+    // }
 
     const handleRegister = e => {
         e.preventDefault();
@@ -24,8 +53,34 @@ const Register = () => {
         const form = new FormData(e.currentTarget)
         const email = form.get('email')
         const password = form.get('password')
+        const type = form.get('type')
         const name = form.get('name')
         const photo = form.get('photo')
+
+        console.log(email, password, type, name, photo);
+        createUser(email, password, type, name, photo)
+            .then(() => {
+                const userInfo = {
+                    userName: name,
+                    userEmail: email,
+                    userPhoto: photo,
+                    userType: type
+                }
+                console.log(userInfo);
+                axiosPublic.post('/users', userInfo)
+                    .then(res => {
+                        if (res.data.insertedId) {
+                            console.log(res.data);
+                            Swal.fire('User Created Successfully')
+
+                        }
+                    })
+
+            })
+            .catch(error => {
+
+                Swal.fire(error.message)
+            })
 
         // // validition
         if (password.length < 6) {
@@ -48,17 +103,6 @@ const Register = () => {
 
 
 
-        console.log(email, password, name, photo);
-        createUser(email, password, name, photo)
-            .then(result => {
-                console.log(result.user);
-                Swal.fire('User Created Successfully')
-                e.target.reset()
-            })
-            .catch(error => {
-
-                Swal.fire(error.message)
-            })
 
     }
 
@@ -68,11 +112,11 @@ const Register = () => {
             <div className="hero min-h-screen bg-base-200">
                 <div className="hero-content flex-col lg:flex-row-reverse">
                     <div className="text-center lg:text-left">
-                        
+
                         <img src={user} alt="" />
                     </div>
                     <div className=" container card shrink-0 mx-auto lg:w-[450px] shadow-2xl bg-base-200 font-semibold">
-                    <h1 className="text-5xl font-bold">Register now!</h1>
+                        <h1 className="text-5xl font-bold">Register now!</h1>
                         <form onSubmit={handleRegister} className="card-body">
                             <div className="form-control">
                                 <label className="label">
@@ -95,6 +139,18 @@ const Register = () => {
                                 <input type="email" name="email" placeholder="Email" className="input input-bordered" required />
                             </div>
                             <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Select Type</span>
+                                </label>
+                                <select className="input input-bordered" required name="type"  >
+                                    <option value="User">User</option>
+                                    <option value="Delivery Man">Delivery Man</option>
+                                    <option value="Admin">Admin</option>
+
+                                </select>
+
+                            </div>
+                            <div className="form-control">
                                 <span className="label-text">Password</span>
                                 <label className="label input input-bordered">
                                     <input type={showPassword ? "text" : "password"}
@@ -110,13 +166,24 @@ const Register = () => {
                                 <button className="btn bg-orange-600 text-white">Register</button>
 
                             </div>
+                            {/* <div className="text-center">
+                        <p className="mb-2">or</p>
+
+                        <p className="mb-2">Log In With</p>
+                        <hr />
+                        <div className="text-center mt-2">
+                            <button onClick={() => handleSocial(googleLogIn)} ><FaGoogle className="text-4xl mr-5"></FaGoogle></button>
+                           
+                        </div>
+                    </div> */}
+                            <SocialLogin></SocialLogin>
                             <p className="text-center">Already have an account?<Link className="text-red-800" to='/login'>LogIn</Link></p>
 
                         </form>
                     </div>
                 </div>
             </div>
-           
+
         </div>
 
     );
