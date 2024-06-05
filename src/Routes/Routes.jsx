@@ -5,10 +5,15 @@ import Root from "../Layout/Root";
 import Login from "../Pages/Login";
 import Register from "../Pages/Register";
 import Dashboard from "../Layout/Dashboard";
-import MyParcel from "../Components/Dashboard/Parcel/MyParcel";
-import BookParcel from "../Components/Dashboard/BookParcel/BookParcel";
-import MyProfile from "../Components/Dashboard/UserProfile/MyProfile";
-import AllMen from "../Components/DeliveryMen/AllMen";
+
+
+
+
+import BookParcel from "../Components/Dashboard/UserDashboard/BookParcel";
+import MyParcel from "../Components/Dashboard/UserDashboard/MyParcel";
+import MyProfile from "../Components/Dashboard/UserDashboard/MyProfile";
+import AllMen from "../Components/Dashboard/DeliveryMen/AllMen";
+
 
 const router = createBrowserRouter([
     {

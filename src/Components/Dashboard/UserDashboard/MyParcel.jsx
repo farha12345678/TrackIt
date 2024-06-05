@@ -1,10 +1,9 @@
 
+
 const MyParcel = () => {
     return (
         <div>
-            <div>
-                My Parcel
-            </div>
+            <h1>My all parcel</h1>
         </div>
     );
 };

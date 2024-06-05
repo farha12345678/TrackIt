@@ -1,10 +1,9 @@
 
+
 const MyProfile = () => {
     return (
         <div>
-            <div>
-               
-            </div>
+            <h1>My Profile</h1>
         </div>
     );
 };

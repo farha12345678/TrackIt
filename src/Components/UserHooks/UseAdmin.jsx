@@ -6,20 +6,25 @@ import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import { AuthContext } from "../../Providers/AuthProvider";
 
 const UseAdmin = () => {
-    const { user } = useContext(AuthContext)
-    const axiosSecure = UseAxiosSecure();
-    const { data: isAdmin } = useQuery({
-        queryKey: [user?.email, 'isAdmin'],
-        queryFn: async() => {
-            const res = await axiosSecure.get(`/users/admin/${user.email}`);
-            console.log(res.data);
-            return res.data?.Admin;
-            
-        }
-        
-        
-    })
-    return [isAdmin ]
-};
+    const axiosSecure = UseAxiosSecure()
 
-export default UseAdmin;
+    const {user , loader} = useContext(AuthContext)
+   
+    const { data: userType = '', isLoading } = useQuery({
+        queryKey: ['role', user?.email],
+        enabled: !loader && !!user?.email,
+        queryFn: async () => {
+          const { data } = await axiosSecure(`/users/${user?.email}`)
+          console.log(data.userType);
+          return data.userType
+        },
+      })
+    
+      //   Fetch user info using logged in user email
+    
+      return [userType, isLoading]
+    }
+
+
+export default UseAdmin
+

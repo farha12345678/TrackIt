@@ -26,26 +26,7 @@ const Register = () => {
 
     const { createUser } = useContext(AuthContext)
 
-    // const handleSocial = socialProvider => {
-    //     socialProvider()
-    //     .then(result => {
-    //         const userInfo = {
-    //             userName : result.user?.displayName,
-    //             userEmail:result.user?.email,
-    //             userPhoto:result.user?.photoURL
-
-    //         }
-    //        axiosPublic.post('/users', userInfo)
-    //         .then(res=> {
-    //             if(res.data.insertedId){
-    //                 console.log(res.data);
-    //                 navigate(from)
-
-    //             }
-    //         })
-
-    //     })
-    // }
+    
 
     const handleRegister = e => {
         e.preventDefault();
