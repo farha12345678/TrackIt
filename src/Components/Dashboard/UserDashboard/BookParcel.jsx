@@ -17,7 +17,7 @@ const BookParcel = () => {
     const { data: users  } = useQuery({
         queryKey: [user?.email],
         queryFn: async() => {
-            const res = await axiosSecure.get(`/users/${user.email}`);
+            const res = await axiosSecure.get(`/parcel/${user._id}`);
             console.log(res.data);
             console.log(users);
             return res.data;

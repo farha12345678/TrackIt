@@ -11,16 +11,7 @@ const Dashboard = () => {
 
     const [userType, isLoading] = UseAdmin()
     console.log(userType, isLoading);
-    // const [isAdmin] = UseAdmin();
-
-    // const [isUser] = UseUser();
-
-
-
-    //   const isAdmin = user?.userType === 'Admin';
-    //   const isUser = user?.userType === 'User';
-    //   const isDeliveryMan = user?.userType === 'Delivery Man';
-    //   console.log(user.userType);
+   
 
 
     return (

@@ -37,15 +37,17 @@ const Register = () => {
         const type = form.get('type')
         const name = form.get('name')
         const photo = form.get('photo')
+        const number = form.get('number')
 
         console.log(email, password, type, name, photo);
-        createUser(email, password, type, name, photo)
+        createUser(email, password, type, name, photo,number)
             .then(() => {
                 const userInfo = {
                     userName: name,
                     userEmail: email,
                     userPhoto: photo,
-                    userType: type
+                    userType: type,
+                    userNumber:number
                 }
                 console.log(userInfo);
                 axiosPublic.post('/users', userInfo)
@@ -126,10 +128,16 @@ const Register = () => {
                                 <select className="input input-bordered" required name="type"  >
                                     <option value="User">User</option>
                                     <option value="Delivery Man">Delivery Man</option>
-                                    <option value="Admin">Admin</option>
+                                    <option disabled value="Admin">Admin</option>
 
                                 </select>
 
+                            </div>
+                            <div className="form-control">
+                                <label className="label">
+                                    <span className="label-text">Phone Number</span>
+                                </label>
+                                <input type="text" name="number" placeholder="Photo URL" className="input input-bordered" required />
                             </div>
                             <div className="form-control">
                                 <span className="label-text">Password</span>
@@ -147,16 +155,7 @@ const Register = () => {
                                 <button className="btn bg-orange-600 text-white">Register</button>
 
                             </div>
-                            {/* <div className="text-center">
-                        <p className="mb-2">or</p>
-
-                        <p className="mb-2">Log In With</p>
-                        <hr />
-                        <div className="text-center mt-2">
-                            <button onClick={() => handleSocial(googleLogIn)} ><FaGoogle className="text-4xl mr-5"></FaGoogle></button>
                            
-                        </div>
-                    </div> */}
                             <SocialLogin></SocialLogin>
                             <p className="text-center">Already have an account?<Link className="text-red-800" to='/login'>LogIn</Link></p>
 

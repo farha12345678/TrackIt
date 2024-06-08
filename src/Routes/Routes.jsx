@@ -12,8 +12,11 @@ import Dashboard from "../Layout/Dashboard";
 import BookParcel from "../Components/Dashboard/UserDashboard/BookParcel";
 import MyParcel from "../Components/Dashboard/UserDashboard/MyParcel";
 import MyProfile from "../Components/Dashboard/UserDashboard/MyProfile";
-import AllMen from "../Components/Dashboard/DeliveryMen/AllMen";
-
+import AllDeliveryMen from "../Components/Dashboard/AdminHome/AllDeliveryMen/AllDeliveryMen";
+import AllParcel from "../Components/Dashboard/AdminHome/AllParcel/AllParcel";
+import AllUsers from "../Components/Dashboard/AdminHome/AllUsers/AllUsers";
+import Statistics from "../Components/Dashboard/AdminHome/Statistics/Statistics";
+import MyDeliveryList from "../Components/Dashboard/DeliveryMen/DeliveryList/MyDeliveryList";
 
 const router = createBrowserRouter([
     {
@@ -52,7 +55,23 @@ const router = createBrowserRouter([
             },
             {
                 path:'allMen',
-                element:<AllMen></AllMen>
+                element:<AllDeliveryMen></AllDeliveryMen>
+            },
+            {
+                path:'allParcel',
+                element:<AllParcel></AllParcel>
+            },
+            {
+                path:'allUser',
+                element:<AllUsers></AllUsers>
+            },
+            {
+                path:'stat',
+                element:<Statistics></Statistics>
+            },
+            {
+                path:'list',
+                element:<MyDeliveryList></MyDeliveryList>
             }
         ]
     }

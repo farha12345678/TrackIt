@@ -11,7 +11,7 @@ const UseAdmin = () => {
     const {user , loader} = useContext(AuthContext)
    
     const { data: userType = '', isLoading } = useQuery({
-        queryKey: ['role', user?.email],
+        queryKey: ['userType', user?.email],
         enabled: !loader && !!user?.email,
         queryFn: async () => {
           const { data } = await axiosSecure(`/users/${user?.email}`)
