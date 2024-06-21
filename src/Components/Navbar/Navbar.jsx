@@ -12,8 +12,8 @@ const Navbar = () => {
 
   const links = <>
     <NavLink className={({ isActive }) => isActive ? 'border-x-2 border-red-400 text-red-600 text-xl ' : 'text-xl border-x-2 '} to='/'><li>Home</li></NavLink>
-    {/* <NavLink className={({ isActive }) => isActive ? 'border-x-2 border-red-400 text-red-600 text-xl ' : 'text-xl border-x-2 '} to='/dashboard'><li>Dashboard</li></NavLink> */}
-    <NavLink className='text-xl' to='/dashboard/myParcel'><li><p><FaBell /></p></li></NavLink>
+    <NavLink className={({ isActive }) => isActive ? 'border-x-2 border-red-400 text-red-600 text-xl ' : 'text-xl border-x-2 '} to='/dashboard'><li>Dashboard</li></NavLink>
+    <NavLink className='text-xl' ><li><p><FaBell /></p></li></NavLink>
 
   </>
   return (
@@ -28,9 +28,9 @@ const Navbar = () => {
               <ul tabIndex={0} className="menu menu-sm dropdown-content mt-3 z-[1] p-2 shadow bg-base-100 rounded-box w-52 ">
                 {links}
                 <Link to='/login'><li>
-                <button className="font-medium text-xl ml-4 text-purple-600">Log In</button></li></Link>
+                  <button className="font-medium text-xl ml-4 text-purple-600">Log In</button></li></Link>
                 <Link to='/register'><li>
-                <button className="font-medium  text-xl ml-4 text-purple-600">Register</button></li></Link>
+                  <button className="font-medium  text-xl ml-4 text-purple-600">Register</button></li></Link>
               </ul>
             </div>
             <div className="flex">
@@ -46,22 +46,25 @@ const Navbar = () => {
           <div className="navbar-end ">
             {
               user ? <>
+               
+                 
+                  <div className="dropdown dropdown-end">
+                    <div tabIndex={0} role="button" className="btn m-1  rounded-full "><img src={user?.photoURL ||
+                      <img className="rounded-full  w-24" src="https://i.ibb.co/d0n94nJ/user-1.png" />} /></div>
+                    <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
+                    <li>{user.displayName || user.email}</li>
+                      <NavLink className={({ isActive }) => isActive ? 'border-x-2 border-red-400 text-red-600 text-xl ' : 'text-xl border-x-2 '} to='/dashboard'><li>Dashboard</li></NavLink>
+                      <Link><li onClick={logOut} className="font-bold   text-xl text-blue-500">Log Out</li></Link>
 
-                <div className="dropdown dropdown-end">
-                  <div tabIndex={0} role="button" className="btn m-1  rounded-full "><img src={user?.photoURL ||
-                    <img className="rounded-full  w-24" src="https://i.ibb.co/d0n94nJ/user-1.png" />} /></div>
-                  <ul tabIndex={0} className="dropdown-content z-[1] menu p-2 shadow bg-base-100 rounded-box w-52">
-                    <NavLink className={({ isActive }) => isActive ? 'border-x-2 border-red-400 text-red-600 text-xl ' : 'text-xl border-x-2 '} to='/dashboard'><li>Dashboard</li></NavLink>
-                    <Link><li onClick={logOut} className="font-bold   text-xl text-blue-500">Log Out</li></Link>
-
-                  </ul>
-                </div>
+                    </ul>
+                  </div>
+                
               </>
                 : <>
-                 <div className="hidden lg:flex">
-                 <Link to='/login'><button className="font-medium text-xl ml-4 text-purple-600">Log In</button></Link>
-                 <Link to='/register'><button className="font-medium  text-xl ml-4 text-purple-600">Register</button></Link>
-                 </div>
+                  <div className="hidden lg:flex">
+                    <Link to='/login'><button className="font-medium text-xl ml-4 text-purple-600">Log In</button></Link>
+                    <Link to='/register'><button className="font-medium  text-xl ml-4 text-purple-600">Register</button></Link>
+                  </div>
                 </>
             }
 
