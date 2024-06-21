@@ -4,7 +4,7 @@ import { AuthContext } from './../../../Providers/AuthProvider';
 import UseAxiosSecure from './../../../Hooks/UseAxiosSecure';
 import { useQuery } from "@tanstack/react-query";
 import ManageReview from "../../Modal/ManageReview";
-import { NavLink, useNavigate } from "react-router-dom";
+import { NavLink } from "react-router-dom";
 import CheckOut from "./CheckOut";
 
 const formatDate = (isoString) => {
@@ -17,8 +17,7 @@ const formatDate = (isoString) => {
 
 
 const MyParcel = () => {
-  const navigate = useNavigate();
-
+  
   const [selectedParcel, setSelectedParcel] = useState(null);
   const [selectedPay, setSelectedPay] = useState(null);
 
@@ -72,10 +71,8 @@ const MyParcel = () => {
                     <td >Cancel</td>
                     <td onClick={() => setSelectedParcel(users)}>Review</td>
                     <td>
-                      
-                        <NavLink to='checkout' onClick={() => setSelectedPay(user)} className="btn">Pay</NavLink>
-                      
-                    </td>
+                      <NavLink to='checkout' onClick={() => setSelectedPay(user)} className="btn">Pay</NavLink>
+                      </td>
                   </tr>
                 )
               }

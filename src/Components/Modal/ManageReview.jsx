@@ -1,4 +1,4 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
 import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
@@ -7,8 +7,6 @@ import Swal from "sweetalert2";
 
 const ManageReview = ({ onClose, parcel }) => {
 
-    
-
     const { user } = useContext(AuthContext)
 
     const axiosSecure = UseAxiosSecure();
@@ -16,51 +14,72 @@ const ManageReview = ({ onClose, parcel }) => {
         queryKey: [user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/users/${user?.email}`);
-           
-
-            return res.data;
+            
+           return res.data;
 
         }
     })
-
-    
-
-    const handleReview = e => {
-        e.preventDefault();
-        const form = e.target
-        const name = users?.userName
-        const photo = users?.userPhoto
-
-
-        const addReview = {}
-        console.log();
-        // send data to the server
-
-        axiosSecure.post('/reviews', addReview)
-            .then(data => {
-                if (data.data.insertedId) {
-                    Swal.fire("Review Added Successfully!");
-
-                    console.log(data.data);
-                }
-                onClose()
-            })
-
-
-    }
 
     const { data: parcels = [] } = useQuery({
-        queryKey: [user?.email],
+        queryKey: ['parcels', user?.email],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/parcels/${user?.email}`);
-           console.log(parcels);
+            const res = await axiosSecure.get(`/parcel/${user?.email}`);
             return res.data;
+        },
+        enabled: !!user?.email, // Ensure user email is available before making the request
+    });
+    
+    const handleReview = async (e) => {
+        e.preventDefault();
+        const form = e.target;
+        const feedback = form.feedback.value;
+        const rating = form.querySelector('input[name="rating-3"]:checked').value;
+        const deliveryManId = form.id.value; 
+        const addReview = {
+            feedback,
+            rating,
+            deliveryManId,
+           
+        };
+
+        try {
+            const response = await axiosSecure.post('/reviews', addReview);
+            if (response.data.insertedId) {
+                Swal.fire("Review Added Successfully!");
+                console.log(response.data);
+            }
+            onClose();
+        } catch (error) {
+            console.error('Error adding review:', error);
+            Swal.fire("Error", "Failed to add review", "error");
         }
-    })
+    };
+    // const handleReview = e => {
+    //     e.preventDefault();
+    //     const form = e.target
+    //     const name = users?.userName
+    //     const photo = users?.userPhoto
+
+
+    //     const addReview = {}
+    //     console.log();
+    //     // send data to the server
+
+    //     axiosSecure.post('/reviews', addReview)
+    //         .then(data => {
+    //             if (data.data.insertedId) {
+    //                 Swal.fire("Review Added Successfully!");
+
+    //                 console.log(data.data);
+    //             }
+    //             onClose()
+    //         })
+
+
+    // }
+
    
-
-
-    return (
+   return (
         <div>
             <Dialog open={!!parcel} onClose={onClose} className="relative z-50">
                 <div className="fixed inset-0 flex w-screen items-center justify-center p-4">
@@ -119,7 +138,7 @@ const ManageReview = ({ onClose, parcel }) => {
                                 type="number"
                                 className="input input-bordered"
                                 name="id"
-                                placeholder={parcels.deliveryManId}
+                                placeholder={parcels?.deliveryManId}
                                 required
                             />
                         </div>
