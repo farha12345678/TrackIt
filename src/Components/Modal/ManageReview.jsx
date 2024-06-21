@@ -14,7 +14,7 @@ const ManageReview = ({ onClose, parcel }) => {
         queryKey: [user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/users/${user?.email}`);
-            
+           
            return res.data;
 
         }
@@ -24,9 +24,10 @@ const ManageReview = ({ onClose, parcel }) => {
         queryKey: ['parcels', user?.email],
         queryFn: async () => {
             const res = await axiosSecure.get(`/parcel/${user?.email}`);
+           
             return res.data;
         },
-        enabled: !!user?.email, // Ensure user email is available before making the request
+       
     });
     
     const handleReview = async (e) => {
