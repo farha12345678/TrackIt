@@ -41,7 +41,7 @@ const AllParcel = () => {
                         </tr>
                     </thead>
                     <tbody className="text-xl">
-                        {parcels.map((user, index) => (
+                        {parcels?.map((user, index) => (
                             <tr key={user._id}>
                                 <th>{index + 1}</th>
                                 <td>{user.name}</td>
@@ -52,7 +52,7 @@ const AllParcel = () => {
                                 <td>{user.status}</td>
                                 
                                 <td>
-                                        {user.status !== 'On The Way' ? (
+                                        {user.status !== 'On The Way'  ?  (
                                             <button onClick={() => setSelectedParcel(user)} className="btn">Manage</button>
                                         ) : (
                                             <button className="btn" disabled>Manage</button>

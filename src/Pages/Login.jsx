@@ -13,10 +13,7 @@ const Login = () => {
     const location = useLocation()
     const from = location?.state || '/'
 
-    
-
-
-    const { signInUser } = useContext(AuthContext)
+ const { signInUser } = useContext(AuthContext)
 
 
     const handleLogIn = e => {
@@ -58,13 +55,13 @@ const Login = () => {
             </div>
             <div className=" container card shrink-0 mx-auto lg:w-[450px] shadow-2xl bg-base-200 lg:mt-10 font-semibold">
                 <form onSubmit={handleLogIn} className="card-body">
-                <h1 className="text-5xl font-bold">Login now!</h1>
+                <h1 className="text-5xl font-bold">Login now !</h1>
                     <div className="form-control">
                         
                         <label className="label">
                             <span className="label-text ">Email</span>
                         </label>
-                        <input type="email" name="email" placeholder="Email" className="input input-bordered" required />
+                        <input type="email" name="email" placeholder="Email" className="input input-bordered" required/>
                     </div>
                     <div className="form-control">
                         <label className="label">

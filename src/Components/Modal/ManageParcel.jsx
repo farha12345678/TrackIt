@@ -1,38 +1,63 @@
-import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 import { useState } from "react";
 import UseAxiosSecure from "../../Hooks/UseAxiosSecure";
 import { useQuery } from "@tanstack/react-query";
-import PropTypes from 'prop-types';
+import { Dialog, DialogPanel, DialogTitle } from "@headlessui/react";
 
 
-const ManageParcel = ({ parcel, onClose, onUpdate }) => {
+const ManageParcel = ({onClose,onUpdate,parcel}) => {
     const [selectedDeliveryMan, setSelectedDeliveryMan] = useState('');
-    const [approxDeliveryDate, setApproxDeliveryDate] = useState('');
-   
+const [approxDeliveryDate, setApproxDeliveryDate] = useState('');
+const [deliveryManEmail, setDeliveryManEmail] = useState('');
     const axiosSecure = UseAxiosSecure();
-  const { data: users = [] } = useQuery({
-    queryKey: ['users'],
-    queryFn: async () => {
-      const res = await axiosSecure.get('/users', {
-        params: { userType: 'Delivery Man' } // Change 'deliveryMan' to the userType you need
-      });
-      console.log(res.data);
-      return res.data;
-    }
-  });
+    const { data: users = [] } = useQuery({
+        queryKey: ['users'],
+        queryFn: async () => {
+            const res = await axiosSecure.get('/users', {
+                params: { userType: 'Delivery Man' }
+            });
+            return res.data;
+        }
+    });
+
+    // const handleSubmit = async () => {
+    //     await axiosSecure.put(`/parcel/${parcel._id}`, {
+    //         ...parcel,
+    //         status: 'On The Way',
+    //         deliveryManId: selectedDeliveryMan,
+    //         approxDeliveryDate,
+    //         deliveryManEmail
+    //     });
+       
+    //     onUpdate();
+    //     onClose();
+       
+
+    // };
 
     const handleSubmit = async () => {
-        await axiosSecure.put(`/parcel/${parcel._id}`, {
-            ...parcel,
-            status: 'On The Way',
-            deliveryManId: selectedDeliveryMan,
-            approxDeliveryDate
-        });
-       
-        onUpdate();
-        onClose();
-       
+        if (selectedDeliveryMan && approxDeliveryDate && deliveryManEmail) {
+            await axiosSecure.put(`/parcel/${parcel._id}`, {
+                ...parcel,
+                status: 'On The Way',
+                deliveryManId: selectedDeliveryMan,
+                approxDeliveryDate,
+                deliveryManEmail
+            });
+            onUpdate();
+            onClose();
+        } else {
+            alert('Please fill in all fields');
+        }
+    };
 
+    const handleDeliveryManChange = (event) => {
+        const selectedDeliveryManId = event.target.value;
+        const selectedDeliveryManData = users.find(man => man._id === selectedDeliveryManId);
+        if (selectedDeliveryManData) {
+            setSelectedDeliveryMan(selectedDeliveryManId);
+            setDeliveryManEmail(selectedDeliveryManData.userEmail);
+            
+        }
     };
 
     return (
@@ -48,7 +73,7 @@ const ManageParcel = ({ parcel, onClose, onUpdate }) => {
                             className="input input-bordered"
                             required
                             value={selectedDeliveryMan}
-                            onChange={(e) => setSelectedDeliveryMan(e.target.value)}
+                            onChange={handleDeliveryManChange}
                         >
                             <option value="" disabled>Select Delivery Man</option>
                             {users.map(man => (
@@ -77,11 +102,4 @@ const ManageParcel = ({ parcel, onClose, onUpdate }) => {
         </Dialog>
     );
 };
-
-ManageParcel.propTypes = {
-    parcel: PropTypes.object,
-    onClose: PropTypes.func.isRequired,
-    onUpdate: PropTypes.func.isRequired,
-};
-
 export default ManageParcel;

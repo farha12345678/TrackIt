@@ -17,7 +17,7 @@ const FeaturedSec = () => {
     },[])
     return (
         <div>
-            <div className=" mx-auto w-80">
+            <div className="mx-auto w-80">
                 <h1 className="text-4xl font-bold italic">Featured Section</h1>
                 <div className="divider"></div>
             </div>

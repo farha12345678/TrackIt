@@ -17,6 +17,9 @@ import AllParcel from "../Components/Dashboard/AdminHome/AllParcel/AllParcel";
 import AllUsers from "../Components/Dashboard/AdminHome/AllUsers/AllUsers";
 import Statistics from "../Components/Dashboard/AdminHome/Statistics/Statistics";
 import MyDeliveryList from "../Components/Dashboard/DeliveryMen/DeliveryList/MyDeliveryList";
+import CheckOut from "../Components/Dashboard/UserDashboard/CheckOut";
+import PrivateRoutes from "./PrivateRoutes";
+
 
 const router = createBrowserRouter([
     {
@@ -39,7 +42,7 @@ const router = createBrowserRouter([
     },
     {
         path:'dashboard',
-        element:<Dashboard></Dashboard>,
+        element:<PrivateRoutes><Dashboard></Dashboard></PrivateRoutes>,
         children:[
             {
                 path:'myParcel',
@@ -72,6 +75,10 @@ const router = createBrowserRouter([
             {
                 path:'list',
                 element:<MyDeliveryList></MyDeliveryList>
+            },
+            {
+                path:'myParcel/checkout',
+                element:<CheckOut></CheckOut>
             }
         ]
     }

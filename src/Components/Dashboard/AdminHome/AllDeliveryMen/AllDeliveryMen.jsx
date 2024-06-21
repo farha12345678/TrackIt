@@ -4,17 +4,38 @@ import UseAxiosSecure from "../../../../Hooks/UseAxiosSecure";
 
 const AllDeliveryMen = () => {
 
-  const axiosSecure = UseAxiosSecure();
-  const { data: users = [] } = useQuery({
+   const axiosSecure = UseAxiosSecure();
+ const { data: users = [] } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
       const res = await axiosSecure.get('/users', {
-        params: { userType: 'Delivery Man' } // Change 'deliveryMan' to the userType you need
+        params: { userType: 'Delivery Man' } 
       });
-      console.log(res.data);
+      console.log(users);
       return res.data;
     }
   });
+
+  
+
+  const { data: parcels = []} = useQuery({
+    queryKey: [users?.userEmail],
+    queryFn: async () => {
+        const res = await axiosSecure.get('/parcel');
+       
+        return res.data;
+
+    }
+
+
+})
+console.log(parcels);
+
+const countDeliveredParcels = (deliveryManEmail) => {
+  return parcels.filter(parcel => parcel.deliveryManEmail === deliveryManEmail && parcel.status === 'Deliver').length;
+};
+
+ 
   return (
     <div>
       <div>
@@ -30,23 +51,16 @@ const AllDeliveryMen = () => {
                 <th>Average review</th>
               </tr>
             </thead>
-            <tbody className="text-xl text-center">
-
-
-              {
-                users.map((user, index) =>
-                  <tr key={user._id}>
-                    <th>{index + 1}</th>
-                    <td>{user.userName}</td>
-                    <td>+{user.userNumber}</td>
-                    <td>{user.parcelsDelivered}</td>
-                    <td className="">{user.averageReview}</td>
-                  </tr>
-                )
-              }
-
-
-            </tbody>
+            <tbody>
+        {users.map((man, index) => (
+          <tr className="text-center text-xl" key={index}>
+             <th>{index + 1}</th>
+            <td>{man.userName}</td>
+            <td>+{man.userNumber}</td>
+            <td>{countDeliveredParcels(man.userEmail)}</td>
+          </tr>
+        ))}
+      </tbody>
           </table>
         </div>
       </div>
