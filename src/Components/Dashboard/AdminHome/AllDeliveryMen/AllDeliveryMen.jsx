@@ -35,6 +35,23 @@ const countDeliveredParcels = (deliveryManEmail) => {
   return parcels.filter(parcel => parcel.deliveryManEmail === deliveryManEmail && parcel.status === 'Deliver').length;
 };
 
+const { data: reviews = [] } = useQuery({
+  queryKey: ['reviews'],
+  queryFn: async () => {
+    const res = await axiosSecure.get('/review');
+    return res.data;
+  }
+});
+
+const getAverageReviewRating = (deliveryManEmail) => {
+  const deliveryManReviews = reviews.filter(review => review.deliveryManEmail === deliveryManEmail);
+  if (deliveryManReviews.length === 0) {
+    return 'No reviews';
+  }
+  const totalRating = deliveryManReviews.reduce((total, review) => total + review.rating, 0);
+  return (totalRating / deliveryManReviews.length).toFixed(2);
+};
+
  
   return (
     <div>
@@ -58,6 +75,7 @@ const countDeliveredParcels = (deliveryManEmail) => {
             <td>{man.userName}</td>
             <td>+{man.userNumber}</td>
             <td>{countDeliveredParcels(man.userEmail)}</td>
+            <td>{getAverageReviewRating(man.userEmail)}</td>
           </tr>
         ))}
       </tbody>

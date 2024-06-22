@@ -1,4 +1,5 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState } from 'react';
+
 import UseAxiosPublic from '../../../Hooks/UseAxiosPublic';
 
 
@@ -11,19 +12,22 @@ const HomeStatistics = () => {
     const [totalDelivered, setTotalDelivered] = useState(0);
     const [totalUsers, setTotalUsers] = useState(0);
 
+     
+
     useEffect(() => {
         (async () => {
             const parcelsResponse = await axiosPublic.get('/parcel');
             const usersResponse = await axiosPublic.get('/users');
-
+            console.log(parcelsResponse);
             const parcels = parcelsResponse.data;
             const users = usersResponse.data;
             console.log(parcels);
             setTotalBooked(parcels.length);
             setTotalDelivered(parcels.filter(parcel => parcel.status === 'Deliver').length);
+            console.log('stat', parcels);
             setTotalUsers(users.length);
-        });
-    }, []);
+        })();
+    }, [axiosPublic]);
     return (
         <div className="grid lg:flex items-center justify-center  my-10">
             <div className="lg:stats shadow bg-red-100">
