@@ -13,7 +13,7 @@ const TopMenSec = () => {
       const res = await axiosSecure.get('/parcel');
       return res.data;
     },
-    enabled: false // Fetch data conditionally
+    
   });
 
   const { data: reviewsData = [] } = useQuery({
@@ -22,7 +22,7 @@ const TopMenSec = () => {
       const res = await axiosSecure.get('/review');
       return res.data;
     },
-    enabled: false // Fetch data conditionally
+    
   });
 
 
@@ -35,7 +35,7 @@ const TopMenSec = () => {
      
       return res.data;
     },
-    enabled: false 
+    
   });
 
   
@@ -72,7 +72,7 @@ const TopMenSec = () => {
       const topMenData = Object.keys(parcelsDelivered).map(deliveryManId => {
         const deliveryMan = deliveryMenData.find(user => user._id === deliveryManId);
         if (!deliveryMan) return null;
-
+console.log('man',deliveryMan);
         const name = deliveryMan.userName || 'Unknown';
         const image = deliveryMan.userPhoto || 'https://via.placeholder.com/150';
         const parcels = parcelsDelivered[deliveryManId];
@@ -105,16 +105,16 @@ console.log('top', topDeliveryMen);
   return (
     <div className="mx-20">
       <div>
-        <h1 className="italic text-4xl font-bold text-center mt-16 mb-10">Our Top Rated Delivery Men</h1>
+        <h1 className="italic text-4xl font-bold text-center mt-16 mb-10">The Top  Delivery Men</h1>
       </div>
 
     
       <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4 my-10">
         {topDeliveryMen.map((man) => (
           <div key={man.deliveryManId} className="card w-96 bg-base-100 shadow-xl">
-            <figure><img src={man.image} alt={man.name} /></figure>
-            <div className="card-body">
-              <h2 className="card-title">{man.name}</h2>
+            <figure><img className="h-40 w-40 rounded-full" src={man.image} alt={man.name} /></figure>
+            <div className="card-body text-center text-xl font-bold">
+              <h2 className="  text-blue-600">{man.name}</h2>
               <p>Parcels Delivered: {man.parcelsDelivered}</p>
               <p>Average Rating: {man.averageReview}</p>
             </div>
