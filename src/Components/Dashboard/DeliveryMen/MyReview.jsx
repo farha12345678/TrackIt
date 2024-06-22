@@ -10,7 +10,7 @@ const MyReview = () => {
     const { data: parcels = [] } = useQuery({
         queryKey: [user?.email],
         queryFn: async () => {
-            const res = await axiosSecure.get(`/review/${user?.email}`);
+            const res = await axiosSecure.get(`/my-review/${user?.email}`);
             console.log(res.data);
             return res.data;
 
