@@ -1,11 +1,14 @@
 import { useContext, useState } from "react";
-import { AuthContext } from './../../../Providers/AuthProvider';
 
-import UseAxiosSecure from './../../../Hooks/UseAxiosSecure';
+
+
 import { useQuery } from "@tanstack/react-query";
-import ManageReview from "../../Modal/ManageReview";
-import { NavLink } from "react-router-dom";
-import CheckOut from "./CheckOut";
+
+import { AuthContext } from "../../../Providers/AuthProvider";
+
+import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
+import ManageReviews from "../../Modal/ManageReviews";
+
 
 const formatDate = (isoString) => {
   const date = new Date(isoString);
@@ -19,7 +22,7 @@ const formatDate = (isoString) => {
 const MyParcel = () => {
   
   const [selectedParcel, setSelectedParcel] = useState(null);
-  const [selectedPay, setSelectedPay] = useState(null);
+  
 
   const { user } = useContext(AuthContext)
 
@@ -71,7 +74,7 @@ const MyParcel = () => {
                     <td >Cancel</td>
                     <td onClick={() => setSelectedParcel(users)}>Review</td>
                     <td>
-                      <NavLink to='checkout' onClick={() => setSelectedPay(user)} className="btn">Pay</NavLink>
+                     pay
                       </td>
                   </tr>
                 )
@@ -81,19 +84,14 @@ const MyParcel = () => {
         </div>
       </div>
       {selectedParcel && (
-        <ManageReview
+        <ManageReviews
           parcel={selectedParcel}
 
           onClose={() => setSelectedParcel(null)}
 
         />
       )}
-      {
-       selectedPay && (
-        <CheckOut
-        pay ={selectedPay}
-        />
-       )}
+      
     </div>
   );
 };
