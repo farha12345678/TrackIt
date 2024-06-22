@@ -3,6 +3,8 @@ import { createContext, useEffect, useState } from "react";
 import PropTypes from 'prop-types';
 import { GoogleAuthProvider } from "firebase/auth";
 import app from "../Firebase/Firebase.config";
+import UseAxiosPublic from "../Hooks/UseAxiosPublic";
+
 
 
 
@@ -18,19 +20,19 @@ const googleProvider = new GoogleAuthProvider();
 
 const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null)
-    const [loader , setLoader] = useState(true)
-
+    const [loader, setLoader] = useState(true)
+    const axiosPublic = UseAxiosPublic()
     const createUser = (email, password) => {
         setLoader(true)
         return createUserWithEmailAndPassword(auth, email, password)
     }
     // update profile
-    const updateUserProfile = (displayName , photoURL) =>{
-        
-       return updateProfile(auth.currentUser, {
+    const updateUserProfile = (displayName, photoURL) => {
+
+        return updateProfile(auth.currentUser, {
             displayName: displayName,
             photoURL: photoURL
-          })
+        })
     }
 
     const signInUser = (email, password) => {
@@ -65,6 +67,20 @@ const AuthProvider = ({ children }) => {
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
             console.log(currentUser)
+            if (currentUser) {
+                // get token
+                const userInfo = {email : currentUser.email};
+                axiosPublic.post('/jwt', userInfo)
+                .then(res => {
+                    if(res.data.token){
+                        localStorage.setItem('access-token', res.data.token)
+                    }
+                })
+            }
+            else {
+                // do something
+                localStorage.removeItem('access-token')
+            }
             setLoader(false)
             setUser(currentUser)
         })
@@ -80,10 +96,10 @@ const AuthProvider = ({ children }) => {
         createUser,
         signInUser,
         googleLogIn,
-       
+
         updateUserProfile,
         loader,
-        
+
         logOut
     }
 

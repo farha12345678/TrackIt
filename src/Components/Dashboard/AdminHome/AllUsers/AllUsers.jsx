@@ -1,17 +1,17 @@
-import {   useQuery} from "@tanstack/react-query";
+import { useQuery } from "@tanstack/react-query";
 import UseAxiosSecure from "../../../../Hooks/UseAxiosSecure";
 import { RiUserSettingsFill } from "react-icons/ri";
 import Swal from "sweetalert2";
 
 
 const AllUsers = () => {
-  
+
   const axiosSecure = UseAxiosSecure();
-  const { data: users = [] , refetch } = useQuery({
+  const { data: users = [], refetch } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
       const res = await axiosSecure.get('/users', {
-        params: { userType: 'User' } // Change 'deliveryMan' to the userType you need
+        params: { userType: 'User' }
       });
       return res.data;
     }
@@ -29,7 +29,7 @@ const AllUsers = () => {
 
 
   })
- 
+
 
   const countBookedParcels = (userEmail) => {
     return parcels.filter(parcel => parcel.email === userEmail).length;
@@ -53,7 +53,7 @@ const AllUsers = () => {
             `${user.userName} has been made a Delivery Man.`,
             'success'
           ).then(() => {
-           refetch() // Refresh the page or update state to reflect changes
+            refetch() // Refresh the page or update state to reflect changes
           });
         } catch (error) {
           console.error('Error making Delivery Man:', error);
@@ -128,12 +128,12 @@ const AllUsers = () => {
                     <td>{user.userName}</td>
                     <td>{countBookedParcels(user.userEmail)}</td>
                     <td>
-                     
-                        <button onClick={() => handleMakeDeliveryMan(user)}><RiUserSettingsFill /></button>
-                      </td>
+
+                      <button onClick={() => handleMakeDeliveryMan(user)}><RiUserSettingsFill /></button>
+                    </td>
                     <td>
                       <button onClick={() => handleMakeAdmin(user)}><RiUserSettingsFill /></button>
-                      </td>
+                    </td>
                   </tr>
                 )
               }

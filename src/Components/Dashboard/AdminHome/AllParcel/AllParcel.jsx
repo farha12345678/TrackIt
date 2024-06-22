@@ -18,7 +18,11 @@ const AllParcel = () => {
     const { data: parcels = [], refetch } = useQuery({
         queryKey: ['parcels'],
         queryFn: async () => {
-            const res = await axiosSecure.get('/parcel');
+            const res = await axiosSecure.get('/parcel', {
+                headers: {
+                  authorization:`Bearer ${localStorage.getItem('access-token')}`
+                }
+              });
             console.log(res.data);
             return res.data;
         }
