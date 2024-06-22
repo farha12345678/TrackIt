@@ -12,19 +12,19 @@ const BookParcel = () => {
 
     const { user } = useContext(AuthContext)
     const axiosPublic = UseAxiosPublic()
-    
+
     const axiosSecure = UseAxiosSecure();
-    const { data: users  } = useQuery({
+    const { data: users } = useQuery({
         queryKey: [user?.email],
-        queryFn: async() => {
+        queryFn: async () => {
             const res = await axiosSecure.get(`/users/${user?.email}`);
             console.log(res.data);
             console.log(users);
             return res.data;
-            
+
         }
-        
-        
+
+
     })
 
     const [weight, setWeight] = useState('');
@@ -43,8 +43,8 @@ const BookParcel = () => {
         setPrice(calculatePrice(newWeight));
     };
 
-    
-    
+
+
     const handleAdd = e => {
         e.preventDefault();
         const form = e.target
@@ -60,31 +60,31 @@ const BookParcel = () => {
         const latitude = form.latitude.value;
         const longitude = form.longitude.value;
         const price = form.price.value;
-        const addParcel = {  name,email,number,type,weight,recName,recNumber,deliveryAdd,deliveryDate,latitude,longitude,price }
-        console.log(name,email,number,type,weight,recName,recNumber,deliveryAdd,deliveryDate,latitude,longitude,price);
+        const addParcel = { name, email, number, type, weight, recName, recNumber, deliveryAdd, deliveryDate, latitude, longitude, price }
+        console.log(name, email, number, type, weight, recName, recNumber, deliveryAdd, deliveryDate, latitude, longitude, price);
         // send data to the server
 
-         axiosPublic.post('/parcel' , addParcel)
-         .then(data => {
-            if(data.data.insertedId){
-                Swal.fire("Parcel Booked Successfully!");
-
+        axiosPublic.post('/parcel', addParcel)
+            .then(data => {
+                if (data.data.insertedId) {
+                    Swal.fire("Parcel Booked Successfully!");
+                    e.target.reset()
                     console.log(data.data);
-            }
+                }
 
-         })
+            })
 
     }
     return (
         <div>
-             <div>
-                    <h1 className="text-3xl font-bold text-center mt-5 italic">Book A Parcel</h1>
-                   
-                </div>
+            <div>
+                <h1 className="text-3xl font-bold text-center mt-5 italic">Book A Parcel</h1>
+
+            </div>
             <div className="hero ">
-               
+
                 <div className="hero-content flex-col lg:flex-row-reverse">
-               
+
                     <div className=" container card shrink-0 mx-auto lg:w-auto shadow-2xl bg-base-200 font-semibold">
 
                         <form onSubmit={handleAdd} className="card-body">
@@ -129,8 +129,8 @@ const BookParcel = () => {
                                         value={weight}
                                         onChange={handleWeight}
                                         className="input input-bordered"
-                                        placeholder="Parcel weight" 
-                                          />
+                                        placeholder="Parcel weight"
+                                    />
                                 </div>
 
                             </div>

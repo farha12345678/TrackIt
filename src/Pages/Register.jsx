@@ -1,7 +1,7 @@
 
 
 import { useContext, useState } from "react";
-import { Link} from "react-router-dom";
+import { Link } from "react-router-dom";
 
 import { FaEyeSlash, FaRegEye } from "react-icons/fa";
 import Swal from "sweetalert2";
@@ -26,7 +26,7 @@ const Register = () => {
 
     const { createUser } = useContext(AuthContext)
 
-    
+
 
     const handleRegister = e => {
         e.preventDefault();
@@ -40,14 +40,14 @@ const Register = () => {
         const number = form.get('number')
 
         console.log(email, password, type, name, photo);
-        createUser(email, password, type, name, photo,number)
+        createUser(email, password, type, name, photo, number)
             .then(() => {
                 const userInfo = {
                     userName: name,
                     userEmail: email,
                     userPhoto: photo,
                     userType: type,
-                    userNumber:number
+                    userNumber: number
                 }
                 console.log(userInfo);
                 axiosPublic.post('/users', userInfo)
@@ -55,7 +55,8 @@ const Register = () => {
                         if (res.data.insertedId) {
                             console.log(res.data);
                             Swal.fire('User Created Successfully')
-
+                            e.target.reset()
+                            console.log(res.data);
                         }
                     })
 
@@ -155,7 +156,7 @@ const Register = () => {
                                 <button className="btn bg-orange-600 text-white">Register</button>
 
                             </div>
-                           
+
                             <SocialLogin></SocialLogin>
                             <p className="text-center">Already have an account?<Link className="text-red-800" to='/login'>LogIn</Link></p>
 
