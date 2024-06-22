@@ -19,6 +19,7 @@ import Statistics from "../Components/Dashboard/AdminHome/Statistics/Statistics"
 import MyDeliveryList from "../Components/Dashboard/DeliveryMen/DeliveryList/MyDeliveryList";
 import CheckOut from "../Components/Dashboard/UserDashboard/CheckOut";
 import PrivateRoutes from "./PrivateRoutes";
+import MyReview from "../Components/Dashboard/DeliveryMen/MyReview";
 
 
 const router = createBrowserRouter([
@@ -77,8 +78,8 @@ const router = createBrowserRouter([
                 element:<MyDeliveryList></MyDeliveryList>
             },
             {
-                path:'myParcel/checkout',
-                element:<CheckOut></CheckOut>
+                path:'reviews',
+                element:<MyReview></MyReview>
             }
         ]
     }

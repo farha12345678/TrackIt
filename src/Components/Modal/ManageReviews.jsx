@@ -31,6 +31,7 @@ const ManageReviews = ({ parcel, onClose }) => {
       rating,
       feedback,
       deliveryManId: parcel.deliveryManId,
+      email : parcel.deliveryManEmail
     };
 
     axiosSecure.post('/review', reviewData);

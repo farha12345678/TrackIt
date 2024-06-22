@@ -37,7 +37,7 @@ const MyProfile = () => {
           <label className="label">
             <span className="label-text">Upload a new picture</span>
           </label>
-          <input type="email" placeholder={users?.userEmail} readOnly className="input input-bordered"  />
+          <input type="email" value={users?.userPhoto}  className="input input-bordered"  />
          
         </div>
         <div className="form-control">
