@@ -1,44 +1,45 @@
 import { useQuery } from "@tanstack/react-query";
 
 import { useState, useEffect } from "react";
-import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
+
+import UseAxiosPublic from "../../../Hooks/UseAxiosPublic";
 
 const TopMenSec = () => {
-  const axiosSecure = UseAxiosSecure();
+  const axiosPublic = UseAxiosPublic();
   const [topDeliveryMen, setTopDeliveryMen] = useState([]);
 
   const { data: parcelsData = [] } = useQuery({
     queryKey: ['parcels'],
     queryFn: async () => {
-      const res = await axiosSecure.get('/parcel');
+      const res = await axiosPublic.get('/parcel');
       return res.data;
     },
-    
+
   });
 
   const { data: reviewsData = [] } = useQuery({
     queryKey: ['reviews'],
     queryFn: async () => {
-      const res = await axiosSecure.get('/review');
+      const res = await axiosPublic.get('/review');
       return res.data;
     },
-    
+
   });
 
 
   const { data: deliveryMenData = [] } = useQuery({
     queryKey: ['users'],
     queryFn: async () => {
-      const res = await axiosSecure.get('/users', {
-        params: { userType: 'Delivery Man' } 
+      const res = await axiosPublic.get('/users', {
+        params: { userType: 'Delivery Man' }
       });
-     
+
       return res.data;
     },
-    
+
   });
 
-  
+
 
   useEffect(() => {
     const calculateTopDeliveryMen = () => {
@@ -72,7 +73,7 @@ const TopMenSec = () => {
       const topMenData = Object.keys(parcelsDelivered).map(deliveryManId => {
         const deliveryMan = deliveryMenData.find(user => user._id === deliveryManId);
         if (!deliveryMan) return null;
-console.log('man',deliveryMan);
+        console.log('man', deliveryMan);
         const name = deliveryMan.userName || 'Unknown';
         const image = deliveryMan.userPhoto || 'https://via.placeholder.com/150';
         const parcels = parcelsDelivered[deliveryManId];
@@ -100,15 +101,15 @@ console.log('man',deliveryMan);
     };
 
     calculateTopDeliveryMen();
-  }, [parcelsData, reviewsData, deliveryMenData, axiosSecure]);
-console.log('top', topDeliveryMen);
+  }, [parcelsData, reviewsData, deliveryMenData, axiosPublic]);
+  console.log('top', topDeliveryMen);
   return (
     <div className="mx-20">
       <div>
         <h1 className="italic text-4xl font-bold text-center mt-16 mb-10">The Top  Delivery Men</h1>
       </div>
 
-    
+
       <div className="grid lg:grid-cols-3 md:grid-cols-2 gap-4 my-10">
         {topDeliveryMen.map((man) => (
           <div key={man.deliveryManId} className="card w-96 bg-base-100 shadow-xl">

@@ -22,7 +22,7 @@ const HomeStatistics = () => {
             setTotalBooked(parcels.length);
             setTotalDelivered(parcels.filter(parcel => parcel.status === 'Deliver').length);
             setTotalUsers(users.length);
-        })();
+        });
     }, []);
     return (
         <div className="grid lg:flex items-center justify-center  my-10">
