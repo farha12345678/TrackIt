@@ -28,6 +28,15 @@
 - Enable users to provide feedback and rate their delivery experience.
 - Provide administrators with tools to manage deliveries, users, and analytics.
 
+# Technology used :
+ - React JS
+ - MongoDB
+ - Javascript
+ - Tailwind CSS
+ - Daisy UI
+ - Swiper Slider
+ - Sweet Alert etc.
+
 # Installation Steps
 1.Clone the repository:
 - git clone https://github.com/farha12345678/TrackIt.git
