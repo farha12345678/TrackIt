@@ -30,10 +30,12 @@
 
 # Installation Steps
 1.Clone the repository:
-- git clone https://github.com/hasibhu/groupServer.git
+- git clone https://github.com/farha12345678/TrackIt.git
+
 2.Navigate to the project directory:
 - cd folder-name
+
 3.Install dependencies:
-npm install
+- npm install
 
 
