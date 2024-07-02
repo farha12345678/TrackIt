@@ -33,3 +33,6 @@
 
 # Eco-Friendly Options:
  Opt for eco-friendly delivery methods, including bicycle couriers and electric vehicles, to reduce your carbon footprint.
+
+ <p>Features : </p>
+ 
