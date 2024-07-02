@@ -3,7 +3,7 @@
 # password: 1234Aa
 # Live Site : https://assignment-12-9220c.web.app/
 
-### 10 Bullet Points : 
+### 5 Bullet Points : 
 # Real-Time Tracking:
  Track your parcel's journey in real-time with live GPS updates, ensuring transparency and peace of mind.
 
@@ -19,19 +19,21 @@
 # Detailed Delivery History:
  Access comprehensive delivery histories and transaction records, enabling easy tracking and reference.
 
-# Flexible Scheduling:
- Schedule deliveries at your convenience, with options for same-day, next-day, and time-specific deliveries.
+ # <p>Features : </p>
+- Allow users to register and authenticate securely.
+- Ensures secure access to app features and personal information.
+- Send notifications to users regarding parcel status updates.
+- Keeps users informed about the progress of their deliveries, enhancing user experience and reducing customer inquiries.
+- Allow users to manage their delivery preferences and personal information.
+- Enable users to provide feedback and rate their delivery experience.
+- Provide administrators with tools to manage deliveries, users, and analytics.
 
-# Efficient Customer Support:
- Benefit from 24/7 customer support to assist with any queries or issues, ensuring a smooth delivery experience.
+# Installation Steps
+1.Clone the repository:
+- git clone https://github.com/hasibhu/groupServer.git
+2.Navigate to the project directory:
+- cd folder-name
+3.Install dependencies:
+npm install
 
-# Integrated Reviews and Ratings:
- Rate and review delivery personnel to help maintain high service standards and build community trust.
 
-# Multi-Parcel Handling:
- Send and manage multiple parcels in a single transaction, streamlining your delivery needs.
-
-# Eco-Friendly Options:
- Opt for eco-friendly delivery methods, including bicycle couriers and electric vehicles, to reduce your carbon footprint.
-
- <p className:text-4xl>Features : </p>
