@@ -4,90 +4,63 @@ import PropTypes from 'prop-types';
 import { GoogleAuthProvider } from "firebase/auth";
 import app from "../Firebase/Firebase.config";
 
+export const AuthContext = createContext(null);
 
-
-
-
-export const AuthContext = createContext(null)
-
-const auth = getAuth(app)
-
-// / google provider
+const auth = getAuth(app);
 const googleProvider = new GoogleAuthProvider();
 
-
-
 const AuthProvider = ({ children }) => {
-    const [user, setUser] = useState(null)
-    const [loader, setLoader] = useState(true)
-   
-    const createUser = (email, password) => {
-        setLoader(true)
-        return createUserWithEmailAndPassword(auth, email, password)
-    }
-    // update profile
-    const updateUserProfile = (displayName, photoURL) => {
+    const [user, setUser] = useState(null);
+    const [loader, setLoader] = useState(true);
 
+    const createUser = (email, password) => {
+        setLoader(true);
+        return createUserWithEmailAndPassword(auth, email, password);
+    };
+
+    const updateUserProfile = (displayName, photoURL) => {
         return updateProfile(auth.currentUser, {
-            displayName: displayName,
-            photoURL: photoURL
-        })
-    }
+            displayName,
+            photoURL
+        });
+    };
 
     const signInUser = (email, password) => {
-        setLoader(true)
+        setLoader(true);
         return signInWithEmailAndPassword(auth, email, password);
-    }
+    };
 
-
-    // google login
     const googleLogIn = () => {
-        setLoader(true)
+        setLoader(true);
         return signInWithPopup(auth, googleProvider);
-    }
-    // github login
-    // const githubLogIn = () => {
-    //     setLoader(true)
-    //     return signInWithPopup(auth, githubProvider);
-    // }
-    // facebook login
-    // const facebookLogIn = () => {
-    //     setLoader(true)
-    //     return signInWithPopup(auth , facebookProvider)
-    // }
-
+    };
 
     const logOut = () => {
-        setUser(null)
-        return signOut(auth)
-    }
-
+        setLoader(true);
+        return signOut(auth).then(() => {
+            setUser(null);
+            setLoader(false);
+        });
+    };
 
     useEffect(() => {
         const unsubscribe = onAuthStateChanged(auth, currentUser => {
-            console.log(currentUser)
-          
-            setLoader(false)
-            setUser(currentUser)
-        })
-        return () => { unsubscribe() };
-    }, [])
+            setUser(currentUser);
+            setLoader(false); // Set loader to false after authentication check completes
+        });
 
+        return () => unsubscribe();
+    }, []);
 
-
-
-    const authInfo =
-    {
+    const authInfo = {
         user,
         createUser,
         signInUser,
         googleLogIn,
-
         updateUserProfile,
         loader,
-
         logOut
-    }
+    };
 
     return (
         <AuthContext.Provider value={authInfo}>
@@ -95,8 +68,9 @@ const AuthProvider = ({ children }) => {
         </AuthContext.Provider>
     );
 };
+
 AuthProvider.propTypes = {
     children: PropTypes.node
-}
+};
 
 export default AuthProvider;

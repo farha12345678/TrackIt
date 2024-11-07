@@ -1,14 +1,8 @@
-import { useContext, useState } from "react";
-
-
-
+import { useContext, useState, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-
 import { AuthContext } from "../../../Providers/AuthProvider";
-
 import UseAxiosSecure from "../../../Hooks/UseAxiosSecure";
 import ManageReviews from "../../Modal/ManageReviews";
-
 
 const formatDate = (isoString) => {
   const date = new Date(isoString);
@@ -18,80 +12,85 @@ const formatDate = (isoString) => {
   return `${day}/${month}/${year}`;
 };
 
-
 const MyParcel = () => {
-  
   const [selectedParcel, setSelectedParcel] = useState(null);
-  
-
-  const { user } = useContext(AuthContext)
-
+  const { user } = useContext(AuthContext);
   const axiosSecure = UseAxiosSecure();
-  const { data: parcels = [] } = useQuery({
+
+  const { data: parcels = [], refetch, isLoading, error } = useQuery({
     queryKey: [user?.email],
     queryFn: async () => {
       const res = await axiosSecure.get(`/parcels/${user?.email}`);
-      console.log('all parcels', res.data);
       return res.data;
-    }
-  })
+    },
+    refetchOnWindowFocus: false,
+    staleTime: 5 * 60 * 1000, // cache data for 5 minutes
+    enabled: !!user?.email, // Only run the query if user.email is available
+  });
 
- 
+  useEffect(() => {
+    // Refetch data if user.email is updated
+    if (user?.email) {
+      refetch();
+    }
+  }, [user?.email, refetch]);
+
+  if (isLoading) {
+    return <div>Loading...</div>;
+  }
+
+  if (error) {
+    return <div>Error loading parcels. Please try again.</div>;
+  }
 
   return (
-    <div>
-
-      <div>
-        <div className="overflow-x-auto">
-          <table className="table">
-
-            <thead className="bg-red-400 text-white text-center">
-              <tr>
-                <th>Parcel Type</th>
-                <th>Requested <br /> Delivery Date</th>
-                <th>Approximate <br /> Delivery Date,</th>
-                <th>Booking <br /> Date</th>
-                <th>Delivery <br /> Men ID</th>
-                <th>Booking <br /> Status</th>
-                <th>Update</th>
-                <th>Cancel</th>
-                <th>Review</th>
-                <th>Pay</th>
+    <div className="relative">
+      <div className="overflow-x-auto bg-white shadow-lg rounded-lg">
+        <table className="min-w-full table-auto">
+          <thead className="bg-red-500 text-white text-sm uppercase tracking-wider">
+            <tr>
+              <th className="px-4 py-2 text-center">Parcel Type</th>
+              <th className="px-4 py-2 text-center">Requested Delivery Date</th>
+              <th className="px-4 py-2 text-center">Approximate Delivery Date</th>
+              <th className="px-4 py-2 text-center">Booking Date</th>
+              <th className="px-4 py-2 text-center">Delivery Man ID</th>
+              <th className="px-4 py-2 text-center">Booking Status</th>
+              <th className="px-4 py-2 text-center">Update</th>
+              <th className="px-4 py-2 text-center">Cancel</th>
+              <th className="px-4 py-2 text-center">Review</th>
+              <th className="px-4 py-2 text-center">Pay</th>
+            </tr>
+          </thead>
+          <tbody className="text-sm text-gray-700">
+            {Array.isArray(parcels) && parcels.map((parcel, index) => (
+              <tr key={parcel._id} className={index % 2 === 0 ? 'bg-gray-50' : 'bg-white'}>
+                <td className="px-4 py-3 text-center">{parcel.type}</td>
+                <td className="px-4 py-3 text-center">{parcel.deliveryDate}</td>
+                <td className="px-4 py-3 text-center">{parcel.approxDeliveryDate}</td>
+                <td className="px-4 py-3 text-center">{formatDate(parcel.bookingDate)}</td>
+                <td className="px-4 py-3 text-center">{parcel.deliveryManId}</td>
+                <td className="px-4 py-3 text-center">{parcel.status}</td>
+                <td className="px-4 py-3 text-center text-indigo-600 cursor-pointer hover:text-indigo-800">Update</td>
+                <td className="px-4 py-3 text-center text-red-600 cursor-pointer hover:text-red-800">Cancel</td>
+                <td onClick={() => setSelectedParcel(parcel)} className="px-4 py-3 text-center text-blue-500 cursor-pointer hover:text-blue-700">Review</td>
+                <td className="px-4 py-3 text-center text-green-600 cursor-pointer hover:text-green-800">Pay</td>
               </tr>
-            </thead>
-            <tbody className="text-center">
-
-              {
-                Array.isArray(parcels) && parcels?.map((users) =>
-                  <tr key={users._id}>
-                    <th>{users.type}</th>
-                    <td>{users.deliveryDate}</td>
-                    <td>{users.approxDeliveryDate}</td>
-                    <td>{formatDate(users.bookingDate)}</td>
-                    <td>{users.deliveryManId}</td>
-                    <td>{users.status}</td>
-                    <td>Update</td>
-                    <td >Cancel</td>
-                    <td onClick={() => setSelectedParcel(users)}>Review</td>
-                    <td>
-                     pay
-                      </td>
-                  </tr>
-                )
-              }
-            </tbody>
-          </table>
-        </div>
+            ))}
+          </tbody>
+        </table>
       </div>
+
       {selectedParcel && (
-        <ManageReviews
-          parcel={selectedParcel}
-
-          onClose={() => setSelectedParcel(null)}
-
-        />
+        <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-40 backdrop-blur-sm">
+          <ManageReviews
+            parcel={selectedParcel}
+            onClose={() => {
+              setSelectedParcel(null);
+              refetch(); // Refetch data after modal close if necessary
+            }}
+          />
+        </div>
       )}
-      
     </div>
   );
 };

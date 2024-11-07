@@ -1,31 +1,27 @@
 import { useContext } from "react";
-
-import { Navigate, useLocation } from "react-router-dom";
+import { Navigate, useLocation, Outlet } from "react-router-dom";
 import { PropTypes } from 'prop-types';
 import { AuthContext } from './../Providers/AuthProvider';
+import Loading from "../Components/Loader/Loading";
 
+const PrivateRoutes = ({ children }) => {
+    const { user, loader } = useContext(AuthContext);
+    const location = useLocation();
 
-
-
-const PrivateRoutes = ({children}) => {
-    const {user , loader} = useContext(AuthContext)
-    const location = useLocation()
-
-    if(loader){
-        return <div className="text-center"><span className="loading loading-bars loading-lg"></span></div>
+    if (loader) {
+        return <Loading />;
     }
 
-    if(!user){
-        return <Navigate to='/login' state={location?.pathname || '/'}></Navigate>
+    if (!user) {
+        // Redirects to the login page and preserves the attempted URL in `state`
+        return <Navigate to="/login" state={{ from: location }} replace />;
     }
-    return (
-        <div>
-            {children}
-        </div>
-    );
+
+    return children ? <div>{children}</div> : <Outlet />;
 };
+
 PrivateRoutes.propTypes = {
     children: PropTypes.node
-}
+};
 
 export default PrivateRoutes;

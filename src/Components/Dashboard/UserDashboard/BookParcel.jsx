@@ -85,7 +85,7 @@ const BookParcel = () => {
 
                 <div className="hero-content flex-col lg:flex-row-reverse">
 
-                    <div className=" container card shrink-0 mx-auto lg:w-auto shadow-2xl bg-base-200 font-semibold">
+                    <div className=" container card shrink-0 mx-auto lg:w-auto shadow-2xl bg-base-300 font-semibold">
 
                         <form onSubmit={handleAdd} className="card-body">
                             <div className="flex gap-x-5">
